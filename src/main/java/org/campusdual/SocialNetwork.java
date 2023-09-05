@@ -14,8 +14,9 @@ public class SocialNetwork {
         this.posts = new ArrayList<>();
         this.postIdCounter = 1;
     }
-    public void createUser(String username){
+    public void createUser(String username) {
         User newUser = new User(username);
+        users.put(username, newUser);
     }
     public void followUser(String followerName,String followedName){
         User follower = users.get(followerName);
@@ -87,7 +88,7 @@ public class SocialNetwork {
             Comment comment = new Comment(commentContent, commenter);
             post.addComment(comment);
         } else {
-            System.out.println("NOT FOUND");
+            System.out.println("POST NOT FOUND");
         }
     }
 
@@ -146,6 +147,11 @@ public class SocialNetwork {
             }
         }
         return 0;
+    }
+
+    //eliminar esto
+    public Map<String, User> getUsers() {
+        return users;
     }
 
 

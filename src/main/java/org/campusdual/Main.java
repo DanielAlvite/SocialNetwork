@@ -34,7 +34,7 @@ public class Main {
             System.out.println("********************************************************************");
 
             int option = scanner.nextInt();
-
+            scanner.nextLine();
             switch (option) {
                 case 1:
                     System.out.println("ENTER A NAME FOR THE NEW USER: ");
@@ -55,6 +55,7 @@ public class Main {
                 case 3:
                     System.out.println("ENTER THE ID OF THE POST TO COMMENT ON: ");
                     int postId = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.println("ENTER THE NAME OF THE USER MAKING THE COMMENT: ");
                     String commenter = scanner.nextLine();
                     System.out.println("ENTER THE COMMENT: ");
@@ -91,6 +92,7 @@ public class Main {
                 case 7:
                     System.out.println("ENTER THE ID OF THE POST TO DELETE: ");
                     int postToDelete = scanner.nextInt();
+                    scanner.nextLine();
                     socialNetwork.deletePost(postToDelete);
                     System.out.println("POST WITH ID " + postToDelete + " DELETED");
                     break;
@@ -133,16 +135,37 @@ public class Main {
                     break;
 
                 case 11:
-                    System.out.println("ENTER THE ID OF THE POST TO SHOW THE NUMBER OF COMMENTS: ");
-                    int postIdToShowComments = scanner.nextInt();
-                    int commentCount = socialNetwork.getCommentCount(postIdToShowComments);
-                    System.out.println("POST ID " + postIdToShowComments + " HAS " + commentCount + " COMMENTS");
+                    System.out.println("ENTER THE ID OF THE POST TO VIEW COMMENTS: ");
+                    int postIdToView = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline
+
+                    Post postToView = socialNetwork.getPostById(postIdToView);
+
+                    if (postToView != null) {
+                        System.out.println("Number of comments on Post #" + postIdToView + ": " + postToView.getComments().size());
+
+                        System.out.println("NUMBER OF COMMENTS ON POST #" + postIdToView + ":");
+                        for (Comment comment : postToView.getComments()) {
+                            System.out.println("COMMENT BY " + comment.getOwner().getName() + " ON " + comment.getDate() + ":");
+                            System.out.println(comment.getText());
+                            System.out.println("--------");
+                        }
+                    } else {
+                        System.out.println("POST WITH ID #" + postIdToView + " NOT FOUND.");
+                    }
                     break;
 
                 case 12:
                     System.out.println("EXITING THE PROGRAM");
                     scanner.close();
                     System.exit(0);
+                    break;
+
+                case 13:
+                    System.out.println("Users created in the Social Network:");
+                    for (User user : socialNetwork.getUsers().values()) {
+                        System.out.println(user.getName());
+                    }
                     break;
 
                 default:
