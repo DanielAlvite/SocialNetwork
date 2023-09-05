@@ -34,6 +34,16 @@ public class SocialNetwork {
         }
     }
 
+    public void deleteUser(String username) {
+        User userToRemove = users.get(username);
+        if (userToRemove != null) {
+            for (Post post : userToRemove.getPosts()) {
+                posts.remove(post);
+            }
+            users.remove(username);
+        }
+    }
+
     public void createPost(String username,String content){
         User user = users.get(username);
 
@@ -55,6 +65,49 @@ public class SocialNetwork {
             posts.remove(postToRemove);
         }
     }
+
+    public Post getPostById(int postId) {
+        for (Post post : posts) {
+            if (post.getId() == postId) {
+                return post;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByName(String userName) {
+        return users.get(userName);
+    }
+
+    public void createComment(int postId, String commenterName, String commentContent) {
+        Post post = getPostById(postId);
+        User commenter = getUserByName(commenterName);
+
+        if (post != null && commenter != null) {
+            Comment comment = new Comment(commentContent, commenter);
+            post.addComment(comment);
+        } else {
+            System.out.println("NOT FOUND");
+        }
+    }
+
+    public void deleteComment(int postId, int commentId) {
+        Post post = getPostById(postId);
+        if (post != null) {
+            List<Comment> comments = post.getComments();
+            Comment commentToRemove = null;
+            for (Comment comment : comments) {
+                if (comment.getId() == commentId) {
+                    commentToRemove = comment;
+                    break;
+                }
+            }
+            if (commentToRemove != null) {
+                comments.remove(commentToRemove);
+            }
+        }
+    }
+
     public List<Post> getUserPosts(String username) {
         User user = users.get(username);
         List<Post> userPosts = new ArrayList<>();

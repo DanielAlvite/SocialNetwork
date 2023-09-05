@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Post {
-    private int id; // Identificador único del post
+    private int id;
     private Date date;
     private List<Comment> comments;
-    private User author; // Autor del post
+    private User author;
     private String content;
     private String title;
     private String type;
@@ -22,14 +22,14 @@ public class Post {
         this.comments = new ArrayList<>();
         this.content = content;
         this.title = "";
-        this.type = "Texto";
+        this.type = "Text";
     }
 
     public Post(int id, User author, String content, String title, Dimensions dimensions) {
         this(id, author, content);
         this.title = title;
         this.dimensions = dimensions;
-        this.type = "Imagen";
+        this.type = "Image";
     }
 
     public Post(int id, User author, String content, String title, int videoQuality, int durationInSeconds) {
