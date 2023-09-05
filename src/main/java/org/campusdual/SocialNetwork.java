@@ -140,6 +140,10 @@ public class SocialNetwork {
         return userComments;
     }
 
+    public Map<String, User> getUsers() {
+        return users;
+    }
+
     public int getCommentCount(int postId){
         for(Post post : posts){
             if(post.getId()== postId){
@@ -148,11 +152,4 @@ public class SocialNetwork {
         }
         return 0;
     }
-
-    //eliminar esto
-    public Map<String, User> getUsers() {
-        return users;
-    }
-
-
 }

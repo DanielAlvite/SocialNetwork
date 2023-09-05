@@ -17,19 +17,28 @@ public class Main {
             System.out.println("* Write a number between 1 and 12 depending on what you want to do *");
             System.out.println("* Any other number will be discarded as an option                  *");
             System.out.println("*                                                                  *");
-            System.out.println("*                             __MENU__                             *");
-            System.out.println("*                 1.         ADD A USER                            *");
-            System.out.println("*                 2.         MAKE A POST                           *");
-            System.out.println("*                 3.        ADD A COMMENT                          *");
-            System.out.println("*                 4.   START FOLLOWING A USER                      *");
-            System.out.println("*                 5.       UNFOLLOW A USER                         *");
-            System.out.println("*                 6.        DELETE A USER                          *");
-            System.out.println("*                 7.        DELETE A POST                          *");
-            System.out.println("*                 8.       DELETE A COMMENT                        *");
-            System.out.println("*                 9.   LIST ALL POSTS OF A USER                    *");
-            System.out.println("*                10.  LIST ALL COMMENTS OF A USER                  *");
-            System.out.println("*                11.SHOW NUMBER OF COMMENTS ON A POST              *");
-            System.out.println("*                12.             EXIT                              *");
+            System.out.println("*                    __MENU__                                      *");
+            System.out.println("*                __CREATE OPTIONS__                                *");
+            System.out.println("*                1.ADD A USER                                      *");
+            System.out.println("*                2.MAKE A POST                                     *");
+            System.out.println("*                3.ADD A COMMENT                                   *");
+            System.out.println("*                                                                  *");
+            System.out.println("*                __FOLLOW OPTIONS__                                *");
+            System.out.println("*                4.START FOLLOWING A USER                          *");
+            System.out.println("*                5.UNFOLLOW A USER                                 *");
+            System.out.println("*                                                                  *");
+            System.out.println("*                __DELETE OPTIONS__                                *");
+            System.out.println("*                6.DELETE A USER                                   *");
+            System.out.println("*                7.DELETE A POST                                   *");
+            System.out.println("*                8.DELETE A COMMENT                                *");
+            System.out.println("*                                                                  *");
+            System.out.println("*                __LIST/SHOW OPTIONS__                             *");
+            System.out.println("*                9.LIST ALL REGISTERED USERS                       *");
+            System.out.println("*                10.LIST ALL POSTS OF A USER                       *");
+            System.out.println("*                11.LIST ALL COMMENTS OF A USER                    *");
+            System.out.println("*                12.SHOW NUMBER OF COMMENTS ON A POST              *");
+            System.out.println("*                                                                  *");
+            System.out.println("*                13.EXIT                                           *");
             System.out.println("*                                                                  *");
             System.out.println("********************************************************************");
 
@@ -107,6 +116,13 @@ public class Main {
                     break;
 
                 case 9:
+                    System.out.println("ALL REGISTERED USERS : ");
+                    for (User user : socialNetwork.getUsers().values()) {
+                        System.out.println(user.getName());
+                    }
+                    break;
+
+                case 10:
                     System.out.println("ENTER THE USERNAME TO LIST ALL POSTS: ");
                     String userToListPosts = scanner.nextLine();
                     List<Post> userPosts = socialNetwork.getUserPosts(userToListPosts);
@@ -120,7 +136,7 @@ public class Main {
                     }
                     break;
 
-                case 10:
+                case 11:
                     System.out.println("ENTER THE USERNAME TO LIST ALL COMMENTS: ");
                     String userToFindComments = scanner.nextLine();
                     List<Comment> userComments = socialNetwork.getUserComments(userToFindComments);
@@ -134,7 +150,7 @@ public class Main {
                     }
                     break;
 
-                case 11:
+                case 12:
                     System.out.println("ENTER THE ID OF THE POST TO VIEW COMMENTS: ");
                     int postIdToView = scanner.nextInt();
                     scanner.nextLine(); // Consume the newline
@@ -155,18 +171,12 @@ public class Main {
                     }
                     break;
 
-                case 12:
+                case 13:
                     System.out.println("EXITING THE PROGRAM");
                     scanner.close();
                     System.exit(0);
                     break;
 
-                case 13:
-                    System.out.println("Users created in the Social Network:");
-                    for (User user : socialNetwork.getUsers().values()) {
-                        System.out.println(user.getName());
-                    }
-                    break;
 
                 default:
                     System.out.println("INVALID OPTION , PLEASE SELECT A VALID OPTION BETWEEN 1 AND 12");
