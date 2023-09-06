@@ -15,7 +15,6 @@ public class User {
     public String getName(){
         return name;
     }
-
     public void followUser(User user){
         follows.add(user);
     }
