@@ -45,15 +45,16 @@ public class SocialNetwork {
         }
     }
 
-    public void createPost(String username,String content){
+    public void createPost(String username, String content) {
         User user = users.get(username);
 
-        if(user != null){
-            Post newPost = new Post(postIdCounter++,user,content);
+        if (user != null) {
+            Post newPost = new Post(postIdCounter++, user, content);
             user.createPost(newPost);
             posts.add(newPost);
         }
     }
+
     public void deletePost(int postId) {
         Post postToRemove = null;
         for (Post post : posts) {
@@ -124,6 +125,7 @@ public class SocialNetwork {
         return userPosts;
     }
 
+
     public List<Comment> getUserComments(String username){
         User user = users.get(username);
         List<Comment> userComments = new ArrayList<>();
@@ -152,4 +154,25 @@ public class SocialNetwork {
         }
         return 0;
     }
+
+    public void createImagePost(String username, String title, int width, int height) {
+        User user = users.get(username);
+
+        if (user != null) {
+            Post newPost = new Post(postIdCounter++, user, "", title, new Dimensions(width, height));
+            user.createPost(newPost);
+            posts.add(newPost);
+        }
+    }
+
+    public void createVideoPost(String username, String title, int videoQuality, int durationInSeconds) {
+        User user = users.get(username);
+
+        if (user != null) {
+            Post newPost = new Post(postIdCounter++, user, "", title, videoQuality, durationInSeconds);
+            user.createPost(newPost);
+            posts.add(newPost);
+        }
+    }
+
 }

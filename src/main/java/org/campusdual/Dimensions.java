@@ -16,7 +16,6 @@ public class Dimensions {
     public int getHeight() {
         return height;
     }
-
     @Override
     public String toString() {
         return width + "x" + height;

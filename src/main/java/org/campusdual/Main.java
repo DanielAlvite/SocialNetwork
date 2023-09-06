@@ -8,7 +8,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         SocialNetwork socialNetwork = new SocialNetwork();
-
+        socialNetwork.createUser("TestUser1");
+        socialNetwork.createUser("TestUser2");
         while (true) {
             System.out.println("***************************SOCIAL_NETWORK***************************");
             System.out.println("*                                                                  *");
@@ -55,10 +56,37 @@ public class Main {
                 case 2:
                     System.out.println("ENTER THE USERNAME OF THE AUTHOR OF THE POST: ");
                     String author = scanner.nextLine();
-                    System.out.println("ENTER THE CONTENT OF THE POST: ");
-                    String content = scanner.nextLine();
-                    socialNetwork.createPost(author, content);
-                    System.out.println("POST CREATED BY: " + author);
+                    System.out.println("ENTER THE CONTENT TYPE (Text, Image, or Video): ");
+                    String contentType = scanner.nextLine();
+
+                    if (contentType.equalsIgnoreCase("Text")) {
+                        System.out.println("ENTER THE CONTENT OF THE POST: ");
+                        String content = scanner.nextLine();
+                        socialNetwork.createPost(author, content);
+                        System.out.println("POST CREATED BY: " + author);
+                    } else if (contentType.equalsIgnoreCase("Image")) {
+                        System.out.println("ENTER THE TITLE OF THE IMAGE: ");
+                        String title = scanner.nextLine();
+                        System.out.println("ENTER THE WIDTH OF THE IMAGE: ");
+                        int width = scanner.nextInt();
+                        System.out.println("ENTER THE HEIGHT OF THE IMAGE: ");
+                        int height = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline
+                        socialNetwork.createImagePost(author, title, width, height);
+                        System.out.println("IMAGE POST CREATED BY: " + author);
+                    } else if (contentType.equalsIgnoreCase("Video")) {
+                        System.out.println("ENTER THE TITLE OF THE VIDEO: ");
+                        String title = scanner.nextLine();
+                        System.out.println("ENTER THE QUALITY OF THE VIDEO: ");
+                        int videoQuality = scanner.nextInt();
+                        System.out.println("ENTER THE DURATION OF THE VIDEO (in seconds): ");
+                        int durationInSeconds = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline
+                        socialNetwork.createVideoPost(author, title, videoQuality, durationInSeconds);
+                        System.out.println("VIDEO POST CREATED BY: " + author);
+                    } else {
+                        System.out.println("Invalid content type. Please enter Text, Image, or Video.");
+                    }
                     break;
 
                 case 3:
@@ -124,15 +152,37 @@ public class Main {
 
                 case 10:
                     System.out.println("ENTER THE USERNAME TO LIST ALL POSTS: ");
-                    String userToListPosts = scanner.nextLine();
-                    List<Post> userPosts = socialNetwork.getUserPosts(userToListPosts);
-                    if (userPosts.isEmpty()) {
-                        System.out.println(userToListPosts + " HAS NO POSTS YET");
-                    } else {
-                        System.out.println("ALL POSTS OF " + userToListPosts + ":");
-                        for (Post post : userPosts) {
-                            System.out.println("POST ID: " + post.getId() + ", CONTENT: " + post.getContent());
+                    String usernameToListPosts = scanner.nextLine();
+                    User userToFindPosts = socialNetwork.getUserByName(usernameToListPosts);
+
+                    if (userToFindPosts != null) {
+                        List<Post> userPosts = socialNetwork.getUserPosts(usernameToListPosts);
+
+                        if (!userPosts.isEmpty()) {
+                            System.out.println("POSTS BY " + usernameToListPosts + ":");
+                            for (Post post : userPosts) {
+                                String postInfo = "";
+
+                                if (post.getType().equalsIgnoreCase("Text")) {
+                                    postInfo = " (Text Post)";
+                                } else if (post.getType().equalsIgnoreCase("Image")) {
+                                    Dimensions dimensions = post.getDimensions();
+                                    postInfo = " (POST TYPE : IMAGE - POST TITLE : " + post.getTitle() + " , DIMENSIONS : " +
+                                            dimensions.getWidth() + "x" + dimensions.getHeight() + ")";
+                                } else if (post.getType().equalsIgnoreCase("Video")) {
+                                    postInfo = " (POST TYPE : VIDEO - POST TITLE : " + post.getTitle() + ", QUALITY : " +
+                                            post.getVideoQuality() + ", DURATION : " + post.getDurationInSeconds() + " seconds)";
+                                }
+
+                                System.out.println("Posted by " + usernameToListPosts +
+                                        postInfo + " at " + post.getDate() +
+                                        ": " + post.getContent());
+                            }
+                        } else {
+                            System.out.println(usernameToListPosts + " has no posts.");
                         }
+                    } else {
+                        System.out.println("User " + usernameToListPosts + " not found.");
                     }
                     break;
 

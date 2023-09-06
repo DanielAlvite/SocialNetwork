@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Post {
-    private int id;
+    private int id; // Identificador único del post
     private Date date;
     private List<Comment> comments;
-    private User author;
+    private User author; // Autor del post
     private String content;
     private String title;
     private String type;
